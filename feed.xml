@@ -3,12 +3,52 @@
     <title>小李的空间</title>
     <link href="https://liquanchen9.github.io/p/feed.xml" rel="self" />
     <link href="https://liquanchen9.github.io/p" />
-    <updated>2020-02-24T10:34:41+08:00</updated>
+    <updated>2020-02-24T10:37:58+08:00</updated>
     <author>
         <name>小李</name>
     </author>
     <id>https://liquanchen9.github.io/p</id>
 
+    <entry>
+        <title>面试翻车——蚂蚁金服电话一面（spring 事务传播）</title>
+        <author>
+            <name>小李</name>
+        </author>
+        <link href="https://liquanchen9.github.io/p/mian-shi-fan-che-ji-lu-ma-yi-jin-fu-dian-hua-yi-mian-spring-shi-wu-chuan-bo.html"/>
+        <id>https://liquanchen9.github.io/p/mian-shi-fan-che-ji-lu-ma-yi-jin-fu-dian-hua-yi-mian-spring-shi-wu-chuan-bo.html</id>
+
+        <updated>2020-02-24T10:37:33+08:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://liquanchen9.github.io/p/media/posts/2/bg-hero-banner-home-spring-framework-5-6cbb8f98d59add33ca5765881e264626.png" alt="" />
+                    背景 2020年从同程旅游离职，准备年初找工作。 遇到了不用出门就在家找工作的特殊时期（PS: 武汉加油！中国加油！🇨🇳） 年后第二个面试电话就是来自蚂蚁金服。 主要就问了spring 有用到吗？spring事务传播级别有几种？在商品和订单不在一个库的情况下怎么保证数据的一致性？ 其实根本就问spring 事务传播的问题； 在个人经历中确实对这个块没什么影响，在近7年的工作中都是 基于spring注解的形式进行处理下事务，本人也只有进行过查询优化处理是改动过事务传播级别，对高性能要求的查询还是强制声明未不需要事务支持，read-only=true ；于是就悲剧了！估计如果我是面试官也会感觉无语吧，我说的内容根本不在这个问题重点访问内的；话不多说吧，下面总结下这个知识点吧！ 正文 spring 事务传播 是什么东西？ spring 事务传播 就是spring 事务管理中的 主要配置内容 ，主要是定义多个应该存在事务（PS： 应该存在 就是如果单独运行就会有事务概念的代码）。概念依赖：事务、spring事务管理器（TransactionManager）、配置注解@Transactional；那么什么时候会有事务呢？典型的例子就是：数据库操作 新增、修改、删除这些操作时 通过在一个数据库事务处理、这样期间出现异常了就可以rollback 回滚了，这就是依赖于数据库软件的事务概念，对应的JDBC API： java.sql.Connection#commit 、java.sql.Connection#rollback、java.sql.Connection#setSavepoint； 事务传播什么时候出现？spring 事务传播这个时候怎么处理这些事务传播呢？ 传播 ！传播就是多个事务在同一的逻辑上出现时，就需要确定他们多个事务怎么处理？我们按 jdbc说 就是 ：你在一个数据库链接了你处理完一个 insert sql ，然后你还要 insert sql ，那么你这个时候 让后面的insert sql 影响&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://liquanchen9.github.io/p/media/posts/2/bg-hero-banner-home-spring-framework-5-6cbb8f98d59add33ca5765881e264626.png" alt="" />
+                <p><strong>背景</strong></p>
+<p>2020年从同程旅游离职，准备年初找工作。</p>
+<p>遇到了不用出门就在家找工作的特殊时期（PS: 武汉加油！中国加油！🇨🇳）</p>
+<p>年后第二个面试电话就是来自蚂蚁金服。</p>
+<p>主要就问了spring 有用到吗？spring事务传播级别有几种？在商品和订单不在一个库的情况下怎么保证数据的一致性？</p>
+<p>其实根本就问spring 事务传播的问题；</p>
+<p>在个人经历中确实对这个块没什么影响，在近7年的工作中都是 基于spring注解的形式进行处理下事务，本人也只有进行过查询优化处理是改动过事务传播级别，对高性能要求的查询还是强制声明未不需要事务支持，read-only=true ；于是就悲剧了！估计如果我是面试官也会感觉无语吧，我说的内容根本不在这个问题重点访问内的；话不多说吧，下面总结下这个知识点吧！</p>
+<p> </p>
+<p><strong>正文</strong></p>
+<p>spring 事务传播 是什么东西？</p>
+<p>spring 事务传播 就是spring 事务管理中的 主要配置内容 ，主要是定义多个应该存在事务（PS： 应该存在 就是如果单独运行就会有事务概念的代码）。概念依赖：事务、spring事务管理器（TransactionManager）、配置注解@Transactional；那么什么时候会有事务呢？典型的例子就是：数据库操作 新增、修改、删除这些操作时 通过在一个数据库事务处理、这样期间出现异常了就可以rollback 回滚了，这就是依赖于数据库软件的事务概念，对应的JDBC API： java.sql.Connection#commit 、java.sql.Connection#rollback、java.sql.Connection#setSavepoint；</p>
+<p>事务传播什么时候出现？spring 事务传播这个时候怎么处理这些事务传播呢？</p>
+<p>传播 ！传播就是多个事务在同一的逻辑上出现时，就需要确定他们多个事务怎么处理？我们按 jdbc说 就是 ：你在一个数据库链接了你处理完一个 insert sql ，然后你还要 insert sql ，那么你这个时候 让后面的insert sql 影响 前面insert sql 吗？╥﹏╥...我都写一起当然想他们就是原子性的，一起成功一起失败啊。于是我做了以下代码的实验。</p>
+<p><img src="https://liquanchen9.github.io/p/media/posts/2/1581594287.jpg" alt="" width="1221" height="257"></p>
+<p> 在mysql默认自动提交事务的基础上：非常不顺的得到了我们的失败！ 第一条自动提交进入数据库，而第二条失败了没能影响第一条sql；没有一起成功，一起失败！（PS: 这里手动修改非自动提交事务的话会怎么样相信聪明的你一定知道了！）</p>
+<p>于是我就用上spring 事务管理再试一次；Talk is cheap. Show me the code</p>
+<p> <img class="post__image" src="https://liquanchen9.github.io/p/media/posts/2/15819107891.png" alt="" width="665" height="351"></p>
+<p> 好了！😀 由于第二条错误导致了第一条也一起失败了！那么现实代码会怎么简单吗？如果是其他的业务呢？这里不是同一个mapper，这里常见的是其他service的insert（PS： 科普下：不同业务间不要轻易使用多个mapper，不利于后期代码扩展，比如：分库、微服务拆分）</p>
+<p>然后我们进入正题：多个数据库的insert 代码 这里是必然的2个事务了，我们先看看代码</p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>面试翻车——MySQL 事务实现之MVCC</title>
         <author>
